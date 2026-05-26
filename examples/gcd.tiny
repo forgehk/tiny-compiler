@@ -1,0 +1,13 @@
+program gcd;
+var a, b, t;
+begin
+    read(a);
+    read(b);
+    while b <> 0 do
+    begin
+        t := b;
+        b := a - (a / b) * b;
+        a := t
+    end;
+    print(a)
+end.

@@ -1,0 +1,12 @@
+program factorial;
+var n, result;
+begin
+    read(n);
+    result := 1;
+    while n > 1 do
+    begin
+        result := result * n;
+        n := n - 1
+    end;
+    print(result)
+end.

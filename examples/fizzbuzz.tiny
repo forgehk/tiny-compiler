@@ -1,0 +1,18 @@
+program fizzbuzz;
+var i, n;
+begin
+    n := 15;
+    i := 1;
+    while i <= n do
+    begin
+        if (i / 15) * 15 = i then
+            print(0)
+        else if (i / 3) * 3 = i then
+            print(-3)
+        else if (i / 5) * 5 = i then
+            print(-5)
+        else
+            print(i);
+        i := i + 1
+    end
+end.
