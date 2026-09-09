@@ -2,7 +2,7 @@
 
 > A small Pascal-like language that compiles to **MIPS-32 assembly** — pairs with [mips-emulator](https://github.com/forgehk/mips-emulator) so you can compile your code and then run it.
 
-[![Tests](https://img.shields.io/badge/tests-25%2F25%20passing-success.svg)]()
+[![CI](https://github.com/forgehk/tiny-compiler/actions/workflows/ci.yml/badge.svg)](https://github.com/forgehk/tiny-compiler/actions/workflows/ci.yml)
 [![Python 3.11+](https://img.shields.io/badge/python-3.11+-blue.svg)]()
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 
