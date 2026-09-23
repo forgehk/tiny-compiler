@@ -5,11 +5,11 @@ begin
     i := 1;
     while i <= n do
     begin
-        if (i / 15) * 15 = i then
+        if i mod 15 = 0 then
             print(0)
-        else if (i / 3) * 3 = i then
+        else if i mod 3 = 0 then
             print(-3)
-        else if (i / 5) * 5 = i then
+        else if i mod 5 = 0 then
             print(-5)
         else
             print(i);
