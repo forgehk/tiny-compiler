@@ -31,7 +31,7 @@ begin
 end.
 ```
 
-Supported: variable declarations, `:=` assignment, `if/then/else`, `while/do`, `read(x)` / `print(expr)`, full arithmetic (`+ - * /`), relational ops (`= <> < <= > >=`), parenthesized expressions, unary minus, and `{ pascal-style comments }`.
+Supported: variable declarations, `:=` assignment, `if/then/else`, `while/do`, `read(x)` / `print(expr)`, full arithmetic (`+ - * /` and `mod`, which truncates toward zero and takes the sign of the dividend, like MIPS `div`/`mfhi`), relational ops (`= <> < <= > >=`), parenthesized expressions, unary minus, and `{ pascal-style comments }`.
 
 ## Install
 
@@ -70,21 +70,21 @@ The pipeline is exactly the four phases every compiler textbook describes:
 | Codegen | `tinycc/codegen.py` | Emits MIPS-32 — stack-allocated temporaries, label generation, syscall conventions |
 | Interpreter | `tinycc/interp.py` | Reference implementation against the same AST |
 
-Expression evaluation uses the classic stack discipline: evaluate left into `$t0`, push, evaluate right, pop into `$t1`, do the op. The data segment holds variables as `.word`s. Syscalls 1/5/10/11 handle print_int / read_int / exit / newline.
+Expression evaluation uses the classic stack discipline: evaluate left into `$t0`, push, evaluate right, pop into `$t1`, do the op. `/` and `mod` both issue one `div` and read the quotient from LO or the remainder from HI. The data segment holds variables as `.word`s. Syscalls 1/5/10/11 handle print_int / read_int / exit / newline.
 
 ## Tests
 
 ```bash
 pytest -q
-# 25 passed
+# 41 passed
 ```
 
-The suite covers the lexer (keywords, multi-char ops, comments, errors), the parser (precedence, control flow, error reporting), the codegen (data section, syscalls, labels, undeclared-variable detection), and the interpreter (factorial, GCD, division-by-zero, stdin handling).
+The suite covers the lexer (keywords, multi-char ops, comments, errors), the parser (precedence, control flow, error reporting), the codegen (data section, syscalls, labels, undeclared-variable detection), the interpreter (factorial, GCD, division-by-zero, stdin handling), and the `mod` operator through every stage, with its sign behaviour checked against the identity `(a / b) * b + (a mod b) = a`.
 
 ## Examples
 
 - `examples/factorial.tiny` — iterative factorial
-- `examples/fizzbuzz.tiny` — fizzbuzz via integer division (no modulo operator in the language, so `(i/n)*n = i` substitutes)
+- `examples/fizzbuzz.tiny` — fizzbuzz with `mod`
 - `examples/gcd.tiny` — Euclidean GCD
 
 ## Companion: run on the emulator
