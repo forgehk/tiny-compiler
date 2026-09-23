@@ -14,7 +14,7 @@ Grammar:
     expr        = rel
     rel         = sum ( ( "=" | "<>" | "<" | "<=" | ">" | ">=" ) sum )?
     sum         = term ( ( "+" | "-" ) term )*
-    term        = factor ( ( "*" | "/" ) factor )*
+    term        = factor ( ( "*" | "/" | "mod" ) factor )*
     factor      = INT | IDENT | "(" expr ")" | "-" factor
 """
 from __future__ import annotations
@@ -155,8 +155,8 @@ class Parser:
 
     def _term(self) -> Node:
         left = self._factor()
-        while self._match(TokKind.STAR, TokKind.SLASH):
-            op = self._advance().value
+        while self._match(TokKind.STAR, TokKind.SLASH, TokKind.MOD):
+            op = self._advance().value.lower()
             right = self._factor()
             left = BinOp(op=op, left=left, right=right)
         return left

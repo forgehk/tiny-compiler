@@ -20,6 +20,7 @@ class TokKind(Enum):
     PRINT = auto()
     READ = auto()
     PROGRAM = auto()
+    MOD = auto()
     # punctuation
     SEMI = auto()
     ASSIGN = auto()
@@ -54,6 +55,7 @@ KEYWORDS = {
     "print": TokKind.PRINT,
     "read": TokKind.READ,
     "program": TokKind.PROGRAM,
+    "mod": TokKind.MOD,
 }
 
 

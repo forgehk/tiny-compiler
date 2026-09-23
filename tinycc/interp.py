@@ -60,12 +60,15 @@ class Interpreter:
             if n.op == "+": return a + b
             if n.op == "-": return a - b
             if n.op == "*": return a * b
-            if n.op == "/":
+            if n.op in ("/", "mod"):
                 if b == 0:
                     raise RuntimeErr("division by zero")
-                # truncate toward zero (matches MIPS div)
+                # truncate toward zero (matches MIPS div); the remainder
+                # takes the sign of the dividend, like MIPS mfhi / C's %
                 q = abs(a) // abs(b)
-                return q if (a < 0) == (b < 0) else -q
+                if (a < 0) != (b < 0):
+                    q = -q
+                return q if n.op == "/" else a - q * b
             if n.op == "=":  return int(a == b)
             if n.op == "<>": return int(a != b)
             if n.op == "<":  return int(a < b)

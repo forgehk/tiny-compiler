@@ -130,6 +130,10 @@ class CodeGen:
             elif n.op == "/":
                 self._emit("    div $t0, $t1")
                 self._emit("    mflo $t0")
+            elif n.op == "mod":
+                # div leaves the quotient in LO and the remainder in HI
+                self._emit("    div $t0, $t1")
+                self._emit("    mfhi $t0")
             elif n.op in ("=", "<>", "<", "<=", ">", ">="):
                 self._gen_cmp(n.op)
             else:
